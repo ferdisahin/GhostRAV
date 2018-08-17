@@ -1,0 +1,26 @@
+<article class="post-card {% if not child.header.featured_image %}no-image{% endif %}">
+        <a class="post-card-image-link" href="{{ related.url }}">
+            {{ related.media[related.header.featured_image].quality(80).html('',related.title|escape,'post-card-image')}}
+        </a>
+    <div class="post-card-content">
+        <a class="post-card-content-link" href="{{related.url}}">
+            <header class="post-card-header">
+                {% if related.taxonomy.category %}
+                   	{% for cat in related.taxonomy.category|slice(0, 1) %}
+                    <span class="post-card-tags">{{ cat }}</span>
+                    {% endfor %}
+                {% endif %} 
+                <h2 class="post-card-title">{{related.title}}</h2>
+            </header>
+            <section class="post-card-excerpt">
+                <p>{{ related.summary(150) }}</p>
+            </section>
+        </a>
+        <footer class="post-card-meta">
+
+            <span class="reading-time">{{ related.content|readingtime({'format': '{minutes_short_count} {minutes_text}'}) }}
+</span>
+
+        </footer>
+    </div>
+</article>

@@ -1,0 +1,170 @@
+{% extends 'partials/base.html.twig' %}
+{% block stylesheets %}
+    {% do assets.addCss('theme://css/bricklayer.css') %}
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% do assets.add('theme://js/bricklayer.min.js') %}
+{% endblock %}
+{% block content %}
+<body class="
+post-template
+{% if page.header.body_classes %}
+    {{ page.header.body_classes }}
+{% endif %}">
+
+    <div class="site-wrapper">
+		<header class="site-header outer">
+			<div class="inner">
+				{% include 'partials/site-nav.html.twig' %}
+			</div>
+		</header>
+
+		<main id="site-main" class="site-main outer">
+			<div class="inner">
+
+				<article class="post-full {% if not page.header.featured_image %}no-image{% endif %}">
+
+					<header class="post-full-header">
+						<section class="post-full-meta">
+							<time class="post-full-meta-date" datetime="">{{ child.date|localizeddate('long', 'none', 'tr', 'Europe/Istanbul', 'dd MMM') }}</time>
+
+							{% for cat in page.taxonomy.category|slice(0, 1) %}
+							<span class="date-divider">/</span> <a href="{{ home_url|rtrim('/') }}/category{{ config.system.param_sep }}{{ cat }}">{{cat}}</a>
+							{% endfor %}     
+						</section>
+						<h1 class="post-full-title">{{page.title}}</h1>
+					</header>
+
+					{% if page.header.featured_image %}
+					<figure class="post-full-image" style="background-image: url({{ page.media[page.header.featured_image].cropZoom(1000, 600).quality(85).url}})">
+					</figure>
+					{% endif %}
+
+					<section class="post-full-content">
+						<div class="post-content">
+							{{content}}
+						</div>
+					</section>
+
+					{% if config.theme.social_subscribe %}
+					<section class="subscribe-form">
+						<h3 class="subscribe-form-title">Subscribe to {{ site.title}}</h3>
+						<p>Get the latest posts delivered right to your inbox</p>
+
+                        <form action="{{ config.theme.social_subscribe }}" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+                            <div class="form-group">
+                                <input class="subscribe-email required email" id="mce-EMAIL" type="email" name="EMAIL" placeholder="youremail@example.com">
+                            </div>
+                            <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_f627dee0be8594ba867cf60ab_644f06b8b0" tabindex="-1" value=""></div>
+                            <button class="button" id="mc-embedded-subscribe" type="submit"><span>Subscribe</span></button>
+                            <div id="mce-responses" class="clear">
+                                <div class="response" id="mce-error-response" style="display:none"></div>
+                                <div class="response" id="mce-success-response" style="display:none"></div>
+                            </div>                 
+                        </form>                
+					</section>
+					{% endif %}
+
+
+					{% if config.theme.social_disqus %}
+					<section class="post-full-comments">
+						<div id="disqus_thread"></div>
+						<script>
+						(function() {
+						var d = document, s = d.createElement('script');
+						s.src = 'https://{{config.theme.social_disqus}}.disqus.com/embed.js';
+						s.setAttribute('data-timestamp', +new Date());
+						(d.head || d.body).appendChild(s);
+						})();
+						</script>
+						<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>       
+					</section>
+					{% endif %}
+
+				</article>
+
+			</div>
+		</main>
+		
+		{% if config.plugins.relatedpages.enabled and related_pages|length > 0 %}
+		<aside class="read-next outer">
+			<div class="inner">
+				<div class="read-next-feed">
+                    {% for related_path, score in related_pages %}
+                        {% set related = grav['pages'].get(related_path) %}
+                        {% if related %}
+							{% include 'partials/related-post-card.html.twig' %}
+						{% endif %}
+					{% endfor %} 
+				</div>
+			</div>
+		</aside>
+		{% endif %}
+		
+		{% include 'partials/floating-header.html.twig' %}
+		
+       	{% include 'partials/footer.html.twig' %}
+
+    </div>
+
+
+{% include 'partials/js-foot.html.twig' %}
+<script>
+$(document).ready(function () {
+    var progressBar = document.querySelector('#reading-progress');
+    var header = document.querySelector('.floating-header');
+    var title = document.querySelector('.post-full-title');
+
+    var lastScrollY = window.scrollY;
+    var lastWindowHeight = window.innerHeight;
+    var lastDocumentHeight = $(document).height();
+    var ticking = false;
+
+    function onScroll() {
+        lastScrollY = window.scrollY;
+        requestTick();
+    }
+
+    function onResize() {
+        lastWindowHeight = window.innerHeight;
+        lastDocumentHeight = $(document).height();
+        requestTick();
+    }
+
+    function requestTick() {
+        if (!ticking) {
+            requestAnimationFrame(update);
+        }
+        ticking = true;
+    }
+
+    function update() {
+        var trigger = title.getBoundingClientRect().top + window.scrollY;
+        var triggerOffset = title.offsetHeight + 35;
+        var progressMax = lastDocumentHeight - lastWindowHeight;
+
+        // show/hide floating header
+        if (lastScrollY >= trigger + triggerOffset) {
+            header.classList.add('floating-active');
+        } else {
+            header.classList.remove('floating-active');
+        }
+
+        progressBar.setAttribute('max', progressMax);
+        progressBar.setAttribute('value', lastScrollY);
+
+        ticking = false;
+    }
+
+    window.addEventListener('scroll', onScroll, {passive: true});
+    window.addEventListener('resize', onResize, false);
+
+    update();
+
+});
+</script>
+</body>
+{% endblock %}

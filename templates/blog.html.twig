@@ -1,0 +1,52 @@
+{% extends 'partials/base.html.twig' %}
+{% set collection = page.collection() %}
+{% set limit = 10 %}
+{% do paginate( collection, limit ) %}
+
+{% block content %}
+<body class="home-template {% if page.header.body_classes %}{{ page.header.body_classes }}{% endif %}">
+
+    <div class="site-wrapper">
+		<header class="site-header outer {% if config.theme.cover_image %}" style="background-image: url({{ theme_url }}/assets/img/{{ config.theme.cover_image}}){% else %}no-cover{% endif %}">
+			<div class="inner">
+				<div class="site-header-content">
+					<h1 class="site-title">
+						{% if config.theme.logo %}
+							<img class="site-logo" src="{{ theme_url }}/assets/img/{{ config.theme.logo}}" alt="{{ site.title }}" />
+						{% else %}
+							{{ site.title }}
+						{% endif %}
+					</h1>
+					<h2 class="site-description">{{ site.metadata.description }}</h2>
+				</div>
+				{% include 'partials/site-nav.html.twig' %}
+			</div>
+		</header>
+
+
+		<main id="site-main" class="site-main outer">
+			<div class="inner">
+
+				<div class="post-feed">
+					{% for child in collection %}
+
+						{% include 'partials/post-card.html.twig' %}
+
+					{% endfor %} 
+
+					{% if config.plugins.pagination.enabled and collection.params.pagination %}
+						{% include 'partials/pagination.html.twig' with {'base_url':page.url, 'pagination':collection.params.pagination} %}
+					{% endif %}  
+				</div>
+
+			</div>
+		</main>
+		
+       	{% include 'partials/footer.html.twig' %}
+
+    </div>
+
+
+{% include 'partials/js-foot.html.twig' %}
+</body>
+{% endblock %}

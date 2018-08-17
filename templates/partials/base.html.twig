@@ -1,0 +1,34 @@
+{% set theme_config = attribute(config.themes, config.system.pages.theme) %}
+<!DOCTYPE html>
+<html lang="{{ grav.language.getActive ?: theme_config.default_lang }}">
+<head>
+    {% block head %}
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>{% if header.title %}{{ header.title|e('html') }} | {% endif %}{{ site.title|e('html') }}</title>
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    {% if config.theme.favicon %}
+    <link rel="shortcut icon" href="{{ theme_url }}/assets/img/{{ config.theme.favicon}}">
+    {% endif %}
+    
+    {% for meta in page.metadata %}
+    <meta {% if meta.name %}name="{{ meta.name }}" {% endif %}{% if meta.http_equiv %}http-equiv="{{ meta.http_equiv }}" {% endif %}{% if meta.charset %}charset="{{ meta.charset }}" {% endif %}{% if meta.property %}property="{{ meta.property }}" {% endif %}{% if meta.content %}content="{{ meta.content }}" {% endif %}/>
+    {% endfor %}  
+   
+    {% block stylesheets %}
+    {% do assets.addCss('theme://assets/css/screen.css' ) %}
+	{% endblock %}
+   	{{ assets.css() }}
+    
+    {% endblock head %}
+
+</head>
+{% block content %}{% endblock %}
+
+       
+        
+
+
+</html>

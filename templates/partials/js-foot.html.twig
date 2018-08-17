@@ -1,0 +1,40 @@
+    {% if config.theme.social_subscribe %}
+    <div id="subscribe" class="subscribe-overlay">
+        <a class="subscribe-overlay-close" href="#"></a>
+        <div class="subscribe-overlay-content">
+            {% if config.theme.logo %}
+                <img class="subscribe-overlay-logo" src="{{ theme_url }}/assets/img/{{ config.theme.logo}}" alt="{{ site.title }}" />
+            {% endif %}
+            <h1 class="subscribe-overlay-title">Subscribe to {{ site.title}}</h1>
+            <p class="subscribe-overlay-description">Stay up to date! Get all the latest &amp; greatest posts delivered straight to your inbox</p>
+            
+            <form action="{{ config.theme.social_subscribe }}" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+                <div class="form-group">
+                    <input class="subscribe-email required email" id="mce-EMAIL" type="email" name="EMAIL" placeholder="youremail@example.com">
+                </div>
+                <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_f627dee0be8594ba867cf60ab_644f06b8b0" tabindex="-1" value=""></div>
+                <button class="button" id="mc-embedded-subscribe" type="submit"><span>Subscribe</span></button>
+                <div id="mce-responses" class="clear">
+                    <div class="response" id="mce-error-response" style="display:none"></div>
+                    <div class="response" id="mce-success-response" style="display:none"></div>
+                </div>                 
+            </form>          
+        </div>
+    </div>
+    {% endif %}    
+
+
+	{% block javascripts %}  
+	  {% do assets.addJs('https://code.jquery.com/jquery-3.2.1.min.js', 105) %}
+
+	  {% if theme_config.ga_analytics %}
+	  <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
+	  <script>
+		window.ga = function () { ga.q.push(arguments) }; ga.q = []; ga.l = +new Date;
+		ga('create', '{{ theme_config.ga_analytics }}', 'auto'); ga('send', 'pageview')
+	  </script>
+	  <script src="https://www.google-analytics.com/analytics.js" async defer></script>
+	  {% endif %}
+
+	{% endblock %}  
+	{{ assets.js() }}

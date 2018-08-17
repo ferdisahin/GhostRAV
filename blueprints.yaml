@@ -1,0 +1,83 @@
+name: GhostRAV
+version: 1.0.0
+description: GRAV Casper Blog Theme
+icon: rebel
+author:
+  name: Ferdi Sahin
+  email: ben@ferdisahin.net
+homepage: https://github.com/ferdisahin/GhostRAV
+demo: http://www.ferdisahin.net
+keywords: ghost, casper, casper blog, ghostrav
+bugs: https://github.com/ferdisahin/GhostRAV/issues
+readme: https://github.com/ferdisahin/GhostRAV/README.md
+license: MIT
+
+dependencies:
+    - { name: grav, version: '>=1.4.0-rc.1' }
+
+form:
+  validation: strict
+
+  fields:
+    general_title:
+        type: section
+        title: General
+        underline: true  
+        
+    upload_imgs:
+        type: file
+        label: Upload Image
+        destination: 'theme@:/assets/img'
+        filesize: 1
+        multiple: true
+        random_name: true
+        accept:
+            - image/*
+            
+    logo:
+      type: filepicker
+      folder: 'theme@:/assets/img'
+      label: Select Logo
+      preview_images: true
+      accept:
+        - .png
+        - .jpg
+        
+    favicon:
+      type: filepicker
+      folder: 'theme@:/assets/img'
+      label: Select Favicon
+      preview_images: true
+      accept:
+        - .png
+        - .jpg
+        
+    cover_image:
+      type: filepicker
+      folder: 'theme@:/assets/img'
+      label: Select Cover Image
+      preview_images: true
+      accept:
+        - .png
+        - .jpg
+        
+    social_title:
+        type: section
+        title: Social
+        underline: true
+    social_facebook:
+        type: text
+        label: Facebook Link
+    social_twitter:
+        type: text
+        label: Twitter Link
+    social_subscribe:
+        type: text
+        label:  Subscribe Link
+    social_disqus:
+        type: text
+        label:  Disqus Name
+    ga_analytics:
+        type: text
+        label: Google Analytics Code
+   

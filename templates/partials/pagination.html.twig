@@ -1,0 +1,18 @@
+{% set pagination = pagination|default(page.collection.params.pagination) %}
+{% set base_url = base_url|default(page.url) %}
+
+{% if pagination|length > 1 %}
+
+<div class="d-flex justify-content-between pagination-area">
+    {% if pagination.hasPrev %}
+        {% set url =  base_url ~ (pagination.params ~ pagination.prevUrl)|replace({'//':'/'}) %}
+        <a class="btn prev btn-general" rel="prev" href="{{ url }}">{{ 'BLOG.PREV'|t }}</a>
+    {% endif %}
+
+    {% if pagination.hasNext %}
+        {% set url = base_url ~ (pagination.params ~ pagination.nextUrl)|replace({'//':'/'}) %}
+        <a class="btn next btn-general" rel="next" href="{{ url }}">{{ 'BLOG.NEXT'|t }}</a>
+    {% endif %}
+</div>
+
+{% endif %}

@@ -1,0 +1,40 @@
+{% extends 'partials/base.html.twig' %}
+
+{% block content %}
+<body class="
+error-template
+{% if page.header.body_classes %}
+    {{ page.header.body_classes }}
+{% endif %}">
+
+    <div class="site-wrapper">
+		<header class="site-header outer no-cover">
+            <div class="inner">
+                <nav class="site-nav-center">
+					{% if config.theme.logo %}
+						<a class="site-nav-logo" href="{{ base_url }}"><img src="{{ config.theme.logo}}" alt="{{ site.title }}" /></a>
+					{% else %}
+						<a class="site-nav-logo" href="{{ base_url }}">{{ site.title }}</a>
+					{% endif %}
+                </nav>
+            </div>
+		</header>
+
+        <main id="site-main" class="site-main outer">
+            <div class="inner">
+
+                <section class="error-message">
+                    <h1 class="error-code">{{ page.header.http_response_code }}</h1>
+                    <p class="error-description">{{page.content}}</p>
+                    <a class="error-link" href="{{base_url}}">Go to the front page →</a>
+                </section>
+
+            </div>
+        </main>
+
+    </div>
+
+
+{% include 'partials/js-foot.html.twig' %}
+</body>
+{% endblock %}

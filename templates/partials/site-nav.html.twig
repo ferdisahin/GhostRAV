@@ -1,0 +1,35 @@
+<nav class="site-nav">
+    <div class="site-nav-left">
+		{% if config.theme.logo %}
+        {% if page.home %}
+        {% else %}
+			<a class="site-nav-logo" href="{{ base_url_absolute }}"><img src="{{ theme_url }}/assets/img/{{ config.theme.logo}}" alt="{{ site.title }}" /></a>
+        {% endif %}
+		{% else %}
+			<a class="site-nav-logo" href="{{ base_url_absolute }}">{{ site.title }}</a>
+		{% endif %}
+
+		<ul class="nav">
+			{% for page in pages.children %}
+				{% if page.visible %}
+					<li><a href="{{ page.url }}">{{ page.menu }}</a></li>
+				{% endif %}
+			{% endfor %}
+		</ul>
+    </div>
+    <div class="site-nav-right">
+        <div class="social-links">
+            {% if config.theme.social_facebook %}
+                <a class="social-link social-link-fb" href="{{ config.theme.social_facebook }}" target="_blank" rel="noopener">{% include 'partials/icons/facebook.html.twig' %}</a>
+            {% endif %}
+            {% if config.theme.social_twitter %}
+                <a class="social-link social-link-tw" href="{{ config.theme.social_twitter }}" target="_blank" rel="noopener">{% include 'partials/icons/twitter.html.twig' %}</a>
+            {% endif %}
+        </div>
+        {% if config.theme.social_subscribe %}
+            <a class="subscribe-button" href="#subscribe">Subscribe</a>
+        {% else %}
+            <a class="rss-button" href="https://feedly.com/i/subscription/feed/{{ base_url }}/rss/" target="_blank" rel="noopener">{% include 'partials/icons/rss.html.twig' %}</a>
+        {% endif %}
+    </div>
+</nav>

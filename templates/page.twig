@@ -1,0 +1,60 @@
+{% extends 'partials/base.html.twig' %}
+
+{% block content %}
+<body class="
+page-template
+{% if page.header.body_classes %}
+    {{ page.header.body_classes }}
+{% endif %}">
+
+    <div class="site-wrapper">
+		<header class="site-header outer">
+			<div class="inner">
+				{% include 'partials/site-nav.html.twig' %}
+			</div>
+		</header>
+
+		<main id="site-main" class="site-main outer">
+			<div class="inner">
+
+				<article class="post-full {% if not page.header.featured_image %}no-image{% endif %}">
+
+					<header class="post-full-header">
+						<h1 class="post-full-title">{{page.title}}</h1>
+					</header>
+
+					{% if page.header.featured_image %}
+					<figure class="post-full-image" style="background-image: url({{ page.media[page.header.featured_image].cropZoom(1000, 600).quality(85).url}})">
+					</figure>
+					{% endif %}
+
+					<section class="post-full-content">
+						<div class="post-content">
+							{{content}}
+						</div>
+					</section>
+
+					<footer class="post-full-footer">
+
+						<!-- Buraya yazar kısımı gelecek -->
+
+					</footer>
+
+
+					<section class="post-full-comments">
+						<!-- Buraya yorum alanı gelecek -->
+					</section>
+
+				</article>
+
+			</div>
+		</main>
+		
+       	{% include 'partials/footer.html.twig' %}
+
+    </div>
+
+
+{% include 'partials/js-foot.html.twig' %}
+</body>
+{% endblock %}

@@ -1,0 +1,24 @@
+title: Item
+'@extends': default
+
+form:
+  fields:
+    tabs:
+      fields:
+        content:
+          fields:
+            featured_image:
+              type: section
+              title: Featured Image
+              underline: true
+              fields:
+                header.featured_image:
+                  type: filepicker
+                  label: Featured Image
+                  placeholder: Select Image
+                  folder: 'self@'
+                  toggleable: true
+                  preview_images: true
+                  acccept:
+                    - .png
+                    - .jpg
