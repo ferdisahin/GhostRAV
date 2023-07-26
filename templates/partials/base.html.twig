@@ -20,7 +20,7 @@
     {% block stylesheets %}
     {% do assets.addCss('theme://assets/css/screen.css' ) %}
 	{% endblock %}
-   	{{ assets.css() }}
+   	{{ assets.css()|raw }}
     
     {% endblock head %}
 
