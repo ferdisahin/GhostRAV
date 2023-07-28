@@ -25,7 +25,7 @@ error-template
 
                 <section class="error-message">
                     <h1 class="error-code">{{ page.header.http_response_code }}</h1>
-                    <p class="error-description">{{page.content}}</p>
+                    <p class="error-description">{{page.content|raw}}</p>
                     <a class="error-link" href="{{base_url}}">Go to the front page →</a>
                 </section>
 
